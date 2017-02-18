@@ -25,7 +25,10 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'puma'
 
-gem 'rails_12factor', group: :production
+group :production do 
+	gem 'rails_12factor'
+	ruby '~> 2.x'
+end
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
