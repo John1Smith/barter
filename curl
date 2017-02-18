@@ -1,0 +1,4 @@
+curl -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -X POST http://localhost:3000/logins.json \
+  -d "{'user_logn' : 'test@example.com', 'password' : 'password'}" 
