@@ -27,7 +27,6 @@ gem 'puma'
 
 group :production do 
 	gem 'rails_12factor'
-	ruby '~> 2.x'
 end
 
 # Use ActiveModel has_secure_password
