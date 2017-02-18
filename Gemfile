@@ -28,6 +28,8 @@ gem 'puma'
 
 gem 'devise'
 
+gem 'pry-byebug'
+
 group :production do 
 	gem 'rails_12factor'
 end
