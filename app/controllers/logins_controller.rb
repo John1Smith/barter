@@ -1,16 +1,19 @@
 class LoginsController < ApplicationController
-  before_action :set_login, only: [:show, :edit, :update, :destroy]
+  before_action :set_login, only: [:show, :edit, :update, :destroy ]
   protect_from_forgery with: :null_session
-skip_before_filter :verify_authenticity_token  
+
+  # skip_before_filter :verify_authenticity_token  
   # GET /logins
   # GET /logins.json
   # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'  
+  # curl -H "Accept: application/json" -H "Content-type: application/json" https://bartermd.herokuapp.com/logins.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'  
+
   def index
      if !verify_token
       render plain: '403'
       return
     end
-    
+
     @logins = Login.all
   end
 
@@ -79,6 +82,31 @@ skip_before_filter :verify_authenticity_token
         format.json { render json: @login.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/14.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'
+  # GET /logins/1
+  # GET /logins/1.json
+  def check
+    # binding.pry
+    @login = Login.find_by_user_login params[:login][:user_login]
+    
+
+    if @login == nil
+      render plain: "404"
+      return    
+    end 
+    if !verify_token
+      render plain: '403'
+      return
+    end
+
+    if @login.password == params[:login][:password]
+      render json: @login
+    else
+      render plain: '401'
+    end
+
   end
 
   # DELETE /logins/1
