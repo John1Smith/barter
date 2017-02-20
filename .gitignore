@@ -7,6 +7,7 @@
 # Ignore bundler config.
 /.bundle
 
+/*.ext
 /api*.txt
 /pass.txt
 /api_localhost.txt

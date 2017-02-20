@@ -9,6 +9,7 @@ class LoginsController < ApplicationController
   # curl -H "Accept: application/json" -H "Content-type: application/json" https://bartermd.herokuapp.com/logins.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'  
 
   def index
+    
      if !verify_token
       render plain: '403'
       return
@@ -21,7 +22,7 @@ class LoginsController < ApplicationController
   # GET /logins/1
   # GET /logins/1.json
   def show
-     if !verify_token
+    if !verify_token
       render plain: '403'
       return
     end
