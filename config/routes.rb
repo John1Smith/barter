@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get 'logins/check/:id' => 'logins#check'
+  get 'logins/check' => 'logins#check'
 
   resources :logins
   # The priority is based upon order of creation: first created -> highest priority.

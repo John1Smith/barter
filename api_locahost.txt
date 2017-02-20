@@ -61,4 +61,4 @@ Method: GET
   Json: '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'
 
 Пример через curl:
- curl -H "Accept: application/json" -H "Content-type: application/json"  http://localhost:3000/logins/check/17.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A==", "login":{"user_login":"vasilii","password":"phO6CoeC3oEk"}}' 
+curl -H "Accept: application/json" -H "Content-type: application/json"  http://localhost:3000/logins/check.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A==", "login":{"user_login":"vasilii","password":"phO6CoeC3oEk"}}' 

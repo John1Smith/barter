@@ -91,15 +91,15 @@ class LoginsController < ApplicationController
     # binding.pry
     @login = Login.find_by_user_login params[:login][:user_login]
     
+    if !verify_token
+      render plain: '403'
+      return
+    end
 
     if @login == nil
       render plain: "404"
       return    
     end 
-    if !verify_token
-      render plain: '403'
-      return
-    end
 
     if @login.password == params[:login][:password]
       render json: @login
