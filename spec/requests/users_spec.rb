@@ -1,22 +1,22 @@
 require "rails_helper"
-describe "Logins API" , :type => :request do
+describe "Users API" , :type => :request do
 
-    context 'Get list of logins' do
+    context 'Get list of users' do
         before(:all) do
-            Login.delete_all
-            FactoryGirl.create_list(:login, 10)
+            User.delete_all
+            FactoryGirl.create_list(:user, 10)
         end
 
         it 'status 403 without authenticity_token' do
-            get '/logins.json'
+            get '/users.json'
 
             expect(response).to have_http_status(403)
         end
 
-        it 'sends logins and status 200 with authenticity_token' do
+        it 'sends users and status 200 with authenticity_token' do
             json = { :format => 'json', :authenticity_token =>  ENV['AUTH_TOKEN']}
 
-            get '/logins.json', json
+            get '/users.json', json
 
             json_resp = JSON.parse(response.body)
 
@@ -26,11 +26,11 @@ describe "Logins API" , :type => :request do
         end
    end
 
-    context 'Get login' do
+    context 'Get user' do
         before(:all) do
-            @login = FactoryGirl.create(:login)
-            login_id = @login.id
-            @path = "/logins/#{login_id}.json"
+            @user = FactoryGirl.create(:user)
+            user_id = @user.id
+            @path = "/users/#{user_id}.json"
         end
 
         it 'status 403 without authenticity_token' do
@@ -39,7 +39,7 @@ describe "Logins API" , :type => :request do
             expect(response).to have_http_status(403)
         end
 
-        it 'send login and status 200 with authenticity_token' do
+        it 'send user and status 200 with authenticity_token' do
             json = { :format => 'json', :authenticity_token =>  ENV['AUTH_TOKEN']}
 
             get @path, json
@@ -47,13 +47,13 @@ describe "Logins API" , :type => :request do
             json_resp = JSON.parse(response.body)
 
             expect(response).to have_http_status(200)
-            expect(Login.new(json_resp)).to eq(@login)
+            expect(User.new(json_resp)).to eq(@user)
         end
 
-        it 'empty body and status 403 for not existing login' do
+        it 'empty body and status 403 for not existing user' do
             json = { :format => 'json', :authenticity_token =>  ENV['AUTH_TOKEN']}
 
-            Login.delete_all
+            User.delete_all
 
             get @path, json
 
@@ -62,12 +62,11 @@ describe "Logins API" , :type => :request do
         end
    end
 
-  context 'Create login' do
+  context 'Create user' do
 
     before(:all) do
-        @login = FactoryGirl.build(:login)
-        # login_id = @login.id
-        @path = "/logins.json"
+        @user = FactoryGirl.build(:user)
+        @path = "/users.json"
     end
 
         it 'status 403 without authenticity_token' do
@@ -76,15 +75,15 @@ describe "Logins API" , :type => :request do
             expect(response).to have_http_status(403)
         end
 
-        it 'send login and status 201 with authenticity_token' do
-            json = { :format => 'json', :authenticity_token =>  ENV['AUTH_TOKEN'], login: @login.as_json.except("id","created_at","updated_at")}
+        it 'send user and status 201 with authenticity_token' do
+            json = { :format => 'json', :authenticity_token =>  ENV['AUTH_TOKEN'], user: @user.as_json.except("id","created_at","updated_at")}
 
             post @path, json
 
             json_resp = JSON.parse(response.body)
 
             expect(response).to have_http_status(201)
-            expect(json_resp["user_login"]).to eq(@login.user_login)
+            expect(json_resp["first_name"]).to eq(@user.first_name)
             expect(json_resp["id"]).not_to be_nil
         end
 
