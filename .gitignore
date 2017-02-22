@@ -16,4 +16,4 @@ api_localhost.txt
 !/log/.keep
 /tmp
 
-/config/environment_variables.yml
+#/config/environment_variables.yml
