@@ -100,7 +100,7 @@ class LoginsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_login
       if not Login.exists? params[:id]
-         render plain: "404"
+         render nothing: true, status:  404
          return
       end           
       @login = Login.find(params[:id])

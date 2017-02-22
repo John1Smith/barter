@@ -106,7 +106,7 @@ skip_before_filter :verify_authenticity_token
 
     def verify_token
       if params[:format]=='json'
-         params["authenticity_token"] == "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="
+         params["authenticity_token"] == ENV['AUTH_TOKEN']
       else
          true   
       end      
