@@ -8,14 +8,14 @@ class LoginsController < ApplicationController
   # skip_before_filter :verify_authenticity_token  
   # GET /logins
   # GET /logins.json
-  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'  
-  # curl -H "Accept: application/json" -H "Content-type: application/json" https://bartermd.herokuapp.com/logins.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'  
+  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins.json -X GET -d '{"authenticity_token": ""}'  
+  # curl -H "Accept: application/json" -H "Content-type: application/json" https://bartermd.herokuapp.com/logins.json -X GET -d '{"authenticity_token": ""}'  
 
   def index
     @logins = Login.all
   end
 
-  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/14.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'
+  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/14.json -X GET -d '{"authenticity_token": ""}'
   # GET /logins/1
   # GET /logins/1.json
   def show
@@ -32,7 +32,7 @@ class LoginsController < ApplicationController
 
   # POST /logins
   # POST /logins.json
-  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins.json -X POST  -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A==", "login":{"user_login":"4442","password":"very12"}}'
+  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins.json -X POST  -d '{"authenticity_token": "", "login":{"user_login":"4442","password":"very12"}}'
   def create
     
     @login = Login.new(login_params)
@@ -50,7 +50,7 @@ class LoginsController < ApplicationController
 
   # PATCH/PUT /logins/1
   # PATCH/PUT /logins/1.json
-  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/1.json -X PUT  -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A==", "login":{"user_login":"4442","password":"very12"}}'
+  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/1.json -X PUT  -d '{"authenticity_token": "", "login":{"user_login":"4442","password":"very12"}}'
   def update
     respond_to do |format|
       if @login.update(login_params)
@@ -63,7 +63,7 @@ class LoginsController < ApplicationController
     end
   end
 
-  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/14.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'
+  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/14.json -X GET -d '{"authenticity_token": ""}'
   # GET /logins/1
   # GET /logins/1.json
   def check
@@ -85,7 +85,7 @@ class LoginsController < ApplicationController
 
   # DELETE /logins/1
   # DELETE /logins/1.json
-  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/12.json -X DELETE -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'
+  # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/12.json -X DELETE -d '{"authenticity_token": ""}'
 
   def destroy
     
