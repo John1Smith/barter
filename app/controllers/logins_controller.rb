@@ -1,5 +1,8 @@
 class LoginsController < ApplicationController
+  before_filter :verify_token
+
   before_action :set_login, only: [:show, :edit, :update, :destroy ]
+
   protect_from_forgery with: :null_session
 
   # skip_before_filter :verify_authenticity_token  
@@ -9,12 +12,6 @@ class LoginsController < ApplicationController
   # curl -H "Accept: application/json" -H "Content-type: application/json" https://bartermd.herokuapp.com/logins.json -X GET -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'  
 
   def index
-    
-     if !verify_token
-      render plain: '403'
-      return
-    end
-
     @logins = Login.all
   end
 
@@ -22,10 +19,6 @@ class LoginsController < ApplicationController
   # GET /logins/1
   # GET /logins/1.json
   def show
-    if !verify_token
-      render plain: '403'
-      return
-    end
   end
 
   # GET /logins/new
@@ -42,13 +35,6 @@ class LoginsController < ApplicationController
   # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins.json -X POST  -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A==", "login":{"user_login":"4442","password":"very12"}}'
   def create
     
-
-    if !verify_token
-      render plain: '403'
-      return
-    end
-
-
     @login = Login.new(login_params)
 
     respond_to do |format|
@@ -66,14 +52,6 @@ class LoginsController < ApplicationController
   # PATCH/PUT /logins/1.json
   # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/1.json -X PUT  -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A==", "login":{"user_login":"4442","password":"very12"}}'
   def update
-
- 
-    if !verify_token
-      render plain: '403'
-      return
-    end
-
-
     respond_to do |format|
       if @login.update(login_params)
         format.html { redirect_to @login, notice: 'Login was successfully updated.' }
@@ -92,20 +70,15 @@ class LoginsController < ApplicationController
     # binding.pry
     @login = Login.find_by_user_login params[:login][:user_login]
     
-    if !verify_token
-      render plain: '403'
-      return
-    end
-
-    if @login == nil
-      render plain: "404"
+    unless @login
+      render nothing: true, status:  404 # Not found login
       return    
     end 
 
     if @login.password == params[:login][:password]
       render json: @login
     else
-      render plain: '401'
+      render nothing: true, status:  401 # Not password corespond login
     end
 
   end
@@ -115,17 +88,11 @@ class LoginsController < ApplicationController
   # curl -H "Accept: application/json" -H "Content-type: application/json" http://localhost:3000/logins/12.json -X DELETE -d '{"authenticity_token": "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="}'
 
   def destroy
-
-     # binding.pry
-     if !verify_token
-      render plain: '403'
-      return
-    end
-
+    
     @login.destroy
     respond_to do |format|
       format.html { redirect_to logins_url, notice: 'Login was successfully destroyed.' }
-      format.json { render plain: 'OK' }
+      format.json { render nothing: true, status:  200 }
     end
   end
 
@@ -145,10 +112,14 @@ class LoginsController < ApplicationController
     end
 
     def verify_token
-      if params[:format]=='json'
-         params["authenticity_token"] == "OKbwY5J/iAW2V5g2k/TP84FJvWl5QsFHlagfwooX5sl4NhBGvpMV6VNIkPWpYcuqpWj5AC4SDdyrdrIx7vsR7A=="
-      else
-         true   
-      end      
+        respond_to do |format|  
+          format.html {}    
+          format.json do
+             auth = params["authenticity_token"] == ENV['AUTH_TOKEN']
+             render nothing: true, status:  403 unless auth
+          end
+        end
+      
     end
+ 
 end
