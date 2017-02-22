@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: barter_production
-  username: barter
-  password: kol4po
+  username: ENV['DB_USER']
+  password: ENV['DB_PASS']
