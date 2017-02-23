@@ -1,5 +1,6 @@
 class LoginsController < ApplicationController
   before_filter :verify_token
+  before_filter :check_login_params, only: [:create, :update, :check ]
 
   before_action :set_login, only: [:show, :edit, :update, :destroy ]
 
@@ -36,7 +37,6 @@ class LoginsController < ApplicationController
   def create
     
     @login = Login.new(login_params)
-
     respond_to do |format|
       if @login.save
         format.html { redirect_to @login, notice: 'Login was successfully created.' }
@@ -109,6 +109,10 @@ class LoginsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def login_params
       params.require(:login).permit(:user_login, :password)
+    end
+
+    def check_login_params
+      render nothing: true, status:  422 unless params[:login]
     end
 
     def verify_token

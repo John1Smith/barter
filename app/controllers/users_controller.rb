@@ -1,5 +1,6 @@
-class UsersController < ApplicationController
+class UsersController < ApplicationController 
   before_filter :verify_token  
+  before_filter :check_login_params, only: [:create, :update ]  
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   protect_from_forgery with: :null_session
 # skip_before_filter :verify_authenticity_token 
@@ -80,6 +81,10 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:first_name, :second_name, :date_bith, :photo_url, :description, :location, :phone)
+    end
+
+    def check_login_params
+      render nothing: true, status:  422 unless params[:user]
     end
 
     def verify_token
